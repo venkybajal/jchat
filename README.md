@@ -21,9 +21,9 @@ Architecture
 3) Routing Engine
 
 
-===========
+----------
 Web Server
-===========
+----------
 1) Web server provides the chat client
 2) Chat client will communicate with Julia SSIP to initialize connection
 3) Julia SSIP establishes between Customer and Agent
@@ -38,19 +38,13 @@ response:
     ws port:
 
 
-=================
+------------
 Julia client
-=================
+------------
 1) initiate request
 2) change port
 3) send/ receive message
 4) close chat
-
-=================
-Julia SSIP Server
-=================
-1) 
-
 
 
 ==============
