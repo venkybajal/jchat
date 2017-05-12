@@ -48,7 +48,7 @@ module RoutingEngine
     
         # TODO: saves the user rating for future us
         open("ratings.matr","a") do f
-            write(f, string(user," ", agent, " ",rating))
+            write(f, string("\n",user," ", agent, " ",rating,"\n"))
         end
         return true   
     end
