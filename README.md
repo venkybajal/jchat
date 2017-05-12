@@ -39,7 +39,7 @@ Usage:
 3) Login the user
 4) User will be connected to one of the agent based on the recommendation
 5) Close the chat window after interaction
-6) Rate the interaction on the scale of 0-5
+6) Rate the interaction on the scale of 1-5
 
 
 -----------
