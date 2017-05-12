@@ -206,7 +206,7 @@
                 $("#u_start").hide()
                 $("#a_start").hide()
                 $("#rate").hide()
-                $("#login").show()
+               
                 $("#thank").hide()
     //Open a WebSocket connection.
             var wsUri = "ws://127.0.0.1:8080";   
@@ -215,11 +215,13 @@
             //Connected to server
             websocket.onopen = function(ev) {
                 //$("#a_start").hide()
+                 $("#login").show()
             }
             
             //Connection close
             websocket.onclose = function(ev) { 
                 //alert('Disconnected');
+                $("#thank").show()
             };
             
             //Message Receved
