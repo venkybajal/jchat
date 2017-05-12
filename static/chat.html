@@ -213,9 +213,6 @@
             
             //Connected to server
             websocket.onopen = function(ev) {
-                
-
-                alert('Connected to server ');
                 //$("#a_start").hide()
             }
             
@@ -334,7 +331,6 @@
 
             $('#a_send').click(function(){ 
                 var username = $("[name=a_username]").val()
-                
                 
                 var mymessage = "REGISTER"+" "+username+" agent"; 
                 websocket.send(mymessage);
