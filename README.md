@@ -28,7 +28,7 @@ manages the session between user and agent
 --------------
 Routing Engine
 --------------
-1) Decides which is the "right" Agent for the customer using Recommendation.jlrou
+1) Decides which is the "right" Agent for the customer using Recommendation.jl package
 
 -----
 Usage:
