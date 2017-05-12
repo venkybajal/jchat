@@ -208,7 +208,7 @@
 
                 $("#login").show()
     //Open a WebSocket connection.
-            var wsUri = "ws://52.175.229.231:8080";   
+            var wsUri = "ws://127.0.0.1:8080";   
             websocket = new WebSocket(wsUri); 
             
             //Connected to server
@@ -224,12 +224,14 @@
             //Message Receved
             websocket.onmessage = function(ev) { 
                 
+
                 if($("#type").val() == "u")
                     $("#u_start").hide()
                 else
                     $("#a_start").hide()
                 $("#chatbox").show()
-                send_fun(ev.data,"left")
+                if(ev.data != "200OK")
+                    send_fun(ev.data,"left")
             };
 
             //Error

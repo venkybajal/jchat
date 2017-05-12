@@ -16,27 +16,17 @@ end
 #Chat == pair(User1, User2) 
 chats = Dict()
 # Array of users
-registrar = User[]
-
-function get_user_by_id(id)
-
-    for i in registrar
-        if i.id == id
-            return (true, i)
-        end
-    end
-    return (false, false)
-end
-
+registrar = Dict()
 
 function getBestAgent(user)
 
     agents = get_the_recommendation(user, 5)
     println(agents)
     for i in agents
-        resp = get_user_by_id(i[1])
-        if resp[1] && resp[2].id != user.id
-            return resp[2]
+
+        if haskey(registrar, i[1])
+            resp = registrar[i[1]]
+            return resp
         end
     end 
     
@@ -54,20 +44,22 @@ function process(client, msg::String)
         
         # add the user info in registrar
         if arr[3] == "agent"
-            if ID%2 == 0
+            println("Is a agent")
+            if ID%2 != 0
                 ID+=1
             end
             user = User(ID, arr[2], false, 4, client)    
-        
-        elseif ID%2 != 0
-                ID+=1
-            user = User(ID, arr[2], true, 4, client)     
         else
+            println("user")
+            if ID%2 == 0
+                ID+=1
+            end    
             user = User(ID, arr[2], true, 4, client)                     
         end
-        
-                
-        push!(registrar, user)
+        ID += 1
+        println(user)
+            
+        registrar[user.id] = user
         # if message is Internal, Query the Routing Engine for the "best" possible agent
         if user.is_external
             agent = getBestAgent(user)
@@ -75,13 +67,24 @@ function process(client, msg::String)
             chats[agent.clientHandle] = user 
         end
 
-        write(client, "Register Received")
+        write(client, "200OK")
         return true
 
     elseif arr[1] == "MESSAGE"
         println(chats)
         other = chats[client]
-        write(other.clientHandle, String(arr[2]))
+        try
+            write(other.clientHandle, String(arr[2]))
+        catch
+            delete!(chats,other)
+            delete!(chats,user)
+            if other.is_external
+                delete!(registrar, user)
+            else
+                delete!(registrar, other)
+                delete!(registrar, user)
+            end
+        end            
         println("MESSAGE Received")
         return true
         # get the destination party from chats::Dict and send the message
