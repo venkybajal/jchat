@@ -205,8 +205,9 @@
                 $("#chatbox").hide()
                 $("#u_start").hide()
                 $("#a_start").hide()
-
+                $("#rate").hide()
                 $("#login").show()
+                $("#thank").hide()
     //Open a WebSocket connection.
             var wsUri = "ws://127.0.0.1:8080";   
             websocket = new WebSocket(wsUri); 
@@ -224,14 +225,25 @@
             //Message Receved
             websocket.onmessage = function(ev) { 
                 
-
+                
+                if(ev.data == "200OK RATE")
+                {
+                    $("#login").hide()
+                    $("#u_start").hide()
+                    $("#a_start").hide()
+                    $("#rate").hide()
+                    $("#thank").show()
+                    return
+                }
                 if($("#type").val() == "u")
                     $("#u_start").hide()
                 else
                     $("#a_start").hide()
+                
                 $("#chatbox").show()
-                if(ev.data != "200OK")
+                if(ev.data != "200OK REGISTER")
                     send_fun(ev.data,"left")
+                
             };
 
             //Error
@@ -254,6 +266,21 @@
             $("#u_start").show()
          });        
 
+         $('#c_close').click(function (e) {
+            
+            $("#chatbox").hide()
+            if($("#type").val() == "u")
+                $("#u_start").hide()
+            else
+                $("#a_start").hide()
+            $("#login").hide()
+            $("#rate").show()
+                
+         });        
+
+        $('#send_rate').click(function (e) {
+            websocket.send("RATE "+$("#mark").val());
+         });        
 
     (function () {
           var Message;
@@ -315,10 +342,6 @@
          
          });
     
-        $('.message_input').keyup(function (e) {
-            if (e.which === 13) {
-            return send_fun(getMessageText());
-        }});
 
         
         
@@ -346,7 +369,7 @@
 
  <body>
 
-   <div id = "login" align = center>  
+   <div id = "login" align = "center">  
     <button type="button" id = "u_login" class="pure-button pure-button-primary">User Login</button> 
     <button type="button" id = "a_login" class="pure-button pure-button-primary">Agent Login</button>  
    </div>
@@ -357,8 +380,8 @@
         <form id class="pure-form">
         <fieldset>
             <legend>User login</legend>
-            <input type="text" name = "u_username" placeholder="Username">
-            <input type="text" name = "a_interest" placeholder="Interest">
+            <input type="text" name = "u_username" placeholder="User ID">
+            <input type="hidden" name = "a_interest" placeholder="Interest">
             <button type="button" id = "u_send" class="pure-button pure-button-primary">Sign in</button>
         </fieldset> 
      </form>
@@ -377,7 +400,7 @@
    <div id = "chatbox" class="chat_window"
    ><div class="top_menu">
        <div class="buttons">
-           <div class="button close">
+           <div class="button close" id="c_close">
                </div>
                <div class="button minimize"></div
                ><div class="button maximize"></div
@@ -398,6 +421,13 @@
                                    ><div class="avatar"></div>
                                    <div class="text_wrapper">
                                        <div class="text"></div></div></li></div>
-   
-         </body>   
+      
+          <div id = "rate" align="center">
+              <input type = "text" id = "mark"/>
+              <button type="button" id = "send_rate" class="pure-button pure-button-primary">Rate</button>
+              </div>                             
+         </body>
+         <div id = "thank", align = "center">
+             <h1>Thank You</h1>
+             </div>   
    </html>

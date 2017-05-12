@@ -4,6 +4,7 @@ include("routing_engine.jl")
 using RoutingEngine
 
 ID=1
+
 type User
     id::Int64
     name::String
@@ -17,6 +18,8 @@ end
 chats = Dict()
 # Array of users
 registrar = Dict()
+
+
 
 function getBestAgent(user)
 
@@ -37,26 +40,18 @@ function process(client, msg::String)
 
     arr = split(msg)
     println(msg)
-    global ID
+    
     if arr[1] == "REGISTER"
         println("Register Received: $msg")
         
         
         # add the user info in registrar
         if arr[3] == "agent"
-            println("Is a agent")
-            if ID%2 != 0
-                ID+=1
-            end
-            user = User(ID, arr[2], false, 4, client)    
+            user = User(parse(Int64,arr[2]), arr[2], false, 4, client)    
         else
-            println("user")
-            if ID%2 == 0
-                ID+=1
-            end    
-            user = User(ID, arr[2], true, 4, client)                     
+            user = User(parse(Int64,arr[2]), arr[2], true, 4, client)                     
         end
-        ID += 1
+        
         println(user)
             
         registrar[user.id] = user
@@ -67,7 +62,7 @@ function process(client, msg::String)
             chats[agent.clientHandle] = user 
         end
 
-        write(client, "200OK")
+        write(client, "200OK REGISTER")
         return true
 
     elseif arr[1] == "MESSAGE"
@@ -90,9 +85,13 @@ function process(client, msg::String)
         # get the destination party from chats::Dict and send the message
 
     elseif arr[1] == "RATE"
-        write(client, "Release Received")
-        println("RELEASE Received")
-        save_ratings(user, get_other(user), arr[2])
+        write(client, "200OK RATE")
+        other = chats[client]
+        user = chats[other.clientHandle]
+        println(user.id)
+        println(other.id)
+        println(arr[2])
+        save_ratings(user.id, other.id, arr[2])
         return true
         # remove the user from Register
     else

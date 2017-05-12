@@ -5,7 +5,7 @@ module RoutingEngine
     n_users = 10
     n_agents = 5
 
-    export get_the_recommendation, save_user_rating
+    export get_the_recommendation, save_ratings
     function load_ratings()
     
         # need to load it from a file 
@@ -44,11 +44,11 @@ module RoutingEngine
         return reco
     end
 
-    function save_user_rating(user, agent,rating::String)
+    function save_ratings(user, agent, rating)
     
         # TODO: saves the user rating for future us
-        open("ratings.matr") do f
-            write(f, string(user)+" "+string(agent)+" "+string(rating))
+        open("ratings.matr","a") do f
+            write(f, string(user," ", agent, " ",rating))
         end
         return true   
     end
