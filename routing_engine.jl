@@ -14,9 +14,10 @@ module RoutingEngine
                 s = readlines(f)
                 
                 for i in s            
-                    row = split(i)
-                    
-                    push!(ratings, Event(parse(Int64,String(row[1])),parse(Int64,String(row[2])), parse(Float64,String(row[3]))))
+                    row = split(i)  
+                    if length(row) == 3
+                        push!(ratings, Event(parse(Int64,String(row[1])),parse(Int64,String(row[2])), parse(Float64,String(row[3]))))
+                    end
                 end
             end
         return ratings
@@ -48,7 +49,7 @@ module RoutingEngine
     
         # TODO: saves the user rating for future us
         open("ratings.matr","a") do f
-            write(f, string("\n",user," ", agent, " ",rating,"\n"))
+            write(f, string("\n",user," ", agent, " ",rating))
         end
         return true   
     end
