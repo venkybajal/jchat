@@ -31,8 +31,9 @@ Routing Engine
 1) Decides which is the "right" Agent for the customer using Recommendation.jl package
 
 -----
-Usage:
+Usage
 -----
+Please following the instructions. There are currently very few validations
 
 1) Open atleast browser windows (one for user, two for agents)
 2) Login the agents first(use user id: 2,4,6..)
@@ -48,6 +49,6 @@ Future Work
 1) Use content-based recommender system for better routing
 2) Add Group Chatting capability
 3) Improve the User Interface
-
+4) Add more validation
 
 
