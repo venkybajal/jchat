@@ -210,13 +210,14 @@
                
                 $("#thank").hide()
     //Open a WebSocket connection.
-            var wsUri = "ws://54.175.229.231:8080";   
+            var wsUri = "ws://52.175.229.231:8080";   
             websocket = new WebSocket(wsUri); 
             
             //Connected to server
             websocket.onopen = function(ev) {
                 //$("#a_start").hide()
-                 $("#login").show()
+                
+		$("#login").show()
             }
             
             //Connection close
@@ -238,11 +239,9 @@
                     $("#thank").show()
                     return
                 }
-                if($("#type").val() == "u")
-                    $("#u_start").hide()
-                else
-                    $("#a_start").hide()
-                
+                 $("#u_start").hide()
+                 $("#a_start").hide()
+                $("#login").hide() 
                 $("#chatbox").show()
                 if(ev.data != "200OK REGISTER")
                     send_fun(ev.data,"left")
@@ -372,14 +371,14 @@
 
  <body>
 
-   <div id = "login" align = "center">  
+   <div id = "login" align = "center" style="dusplay:none">  
     <button type="button" id = "u_login" class="pure-button pure-button-primary">User Login</button> 
     <button type="button" id = "a_login" class="pure-button pure-button-primary">Agent Login</button>  
    </div>
 
    <input type="hidden" name="type"/>
    
-   <div id = "u_start" align="center">
+   <div id = "u_start" align="center" style="display:none">
         <form id class="pure-form">
         <fieldset>
             <legend>User login</legend>
@@ -390,7 +389,7 @@
      </form>
    </div>
 
-   <div id = "a_start" align="center">
+   <div id = "a_start" align="center" style="display:none">
         <form id class="pure-form">
         <fieldset>
             <legend>Agent login</legend>
@@ -400,7 +399,7 @@
      </form>
    </div>
 
-   <div id = "chatbox" class="chat_window"
+   <div id = "chatbox" class="chat_window" style="display:none"
    ><div class="top_menu">
        <div class="buttons">
            <div class="button close" id="c_close">
@@ -425,12 +424,12 @@
                                    <div class="text_wrapper">
                                        <div class="text"></div></div></li></div>
       
-          <div id = "rate" align="center">
+          <div id = "rate" align="center" style="display:none">
               <input type = "text" id = "mark"/>
               <button type="button" id = "send_rate" class="pure-button pure-button-primary">Rate</button>
               </div>                             
          </body>
-         <div id = "thank", align = "center">
+         <div id = "thank", align = "center" style="display:none">
              <h1>Thank You</h1>
              </div>   
    </html>
